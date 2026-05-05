@@ -1,3 +1,8 @@
+## 0.1.6 - 2026-05-05
+
+### Changed
+- Test schema is now built via `PhoenixKit.Migration.ensure_current/2` in `test_helper.exs` (requires `phoenix_kit ≥ 1.7.105`); removed hand-rolled `test/support/postgres/migrations/` and the `ecto.migrate` step from the `test.setup` alias — schema drift impossible by construction (#15)
+
 ## 0.1.5 - 2026-04-29
 
 ### Added
