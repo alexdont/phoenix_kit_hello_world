@@ -250,10 +250,10 @@ This template module has no database tables. Modules that need DB tables should 
 
 ### Setup
 
-This module owns its own test database (`phoenix_kit_hello_world_test`) and a test migration at `test/support/postgres/migrations/`. Create the DB once:
+This module owns its own test database (`phoenix_kit_hello_world_test`). Schema setup runs core's versioned migrations directly via `PhoenixKit.Migration.ensure_current/2` in `test/test_helper.exs` — no module-owned DDL anywhere. Create the DB once:
 
 ```bash
-createdb phoenix_kit_hello_world_test
+mix test.setup    # ecto.create; test_helper handles the rest on every boot
 ```
 
 If the DB is absent, integration tests auto-exclude via the `:integration` tag (see `test/test_helper.exs`) — unit tests still run.
@@ -273,7 +273,7 @@ Without this, all DB calls through `PhoenixKit.RepoHelper` crash with "No reposi
 - `test/support/live_case.ex` — `PhoenixKitHelloWorld.LiveCase` (thin wrapper around `Phoenix.LiveViewTest` with router + endpoint wiring)
 - `test/support/test_endpoint.ex` + `test_router.ex` + `test_layouts.ex` — minimal Phoenix plumbing so LiveViews can render under `Phoenix.LiveViewTest.live/2`. **`Test.Layouts.app/1` renders flashes** — required for asserting flash content via `live/2` after click events
 - `test/support/activity_log_assertions.ex` — `PhoenixKitHelloWorld.ActivityLogAssertions` (helpers `assert_activity_logged/2` and `refute_activity_logged/2` that query `phoenix_kit_activities` directly with action / actor_uuid / metadata-subset matching)
-- `test/support/postgres/migrations/` — creates the `phoenix_kit_settings` and `phoenix_kit_activities` tables + the `uuid_generate_v7()` function (this module owns no application tables)
+- `test/test_helper.exs` — calls `PhoenixKit.Migration.ensure_current/2` to apply all core versioned migrations on every boot. **Do not** swap in `Ecto.Migrator.run([{0, PhoenixKit.Migration}], :up, all: true)` — that pattern silently goes stale once `0` is in `schema_migrations` (the inner runner is never re-invoked, so newly-shipped Vxxx migrations don't apply). See `PhoenixKit.Migration.ensure_current/2` moduledoc for the full bug story
 
 ### Running tests
 

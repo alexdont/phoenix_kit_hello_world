@@ -46,8 +46,7 @@ defmodule PhoenixKitHelloWorld.MixProject do
       "quality.ci": ["format --check-formatted", "credo --strict", "dialyzer"],
       precommit: ["compile", "quality"],
       "test.setup": [
-        "ecto.create --quiet -r PhoenixKitHelloWorld.Test.Repo",
-        "ecto.migrate -r PhoenixKitHelloWorld.Test.Repo"
+        "ecto.create --quiet -r PhoenixKitHelloWorld.Test.Repo"
       ],
       "test.reset": [
         "ecto.drop --quiet -r PhoenixKitHelloWorld.Test.Repo",

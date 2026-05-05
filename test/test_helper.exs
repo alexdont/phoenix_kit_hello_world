@@ -65,6 +65,13 @@ repo_available =
     try do
       {:ok, _} = PhoenixKitHelloWorld.Test.Repo.start_link()
 
+      # Build the schema by running core's versioned migrations directly.
+      # The previous hand-rolled `test/support/postgres/migrations/` shim
+      # recreated `phoenix_kit_settings`, `phoenix_kit_activities`, and
+      # the `uuid_generate_v7()` function — all owned by core's V03 /
+      # V40 / V90 migrations. Schema drift impossible by construction.
+      PhoenixKit.Migration.ensure_current(PhoenixKitHelloWorld.Test.Repo, log: false)
+
       Ecto.Adapters.SQL.Sandbox.mode(PhoenixKitHelloWorld.Test.Repo, :manual)
       true
     rescue
