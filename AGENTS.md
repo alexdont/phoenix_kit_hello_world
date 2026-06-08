@@ -54,7 +54,7 @@ mix docs                    # Generate documentation
 
 This is a **library** (not a standalone Phoenix app) — there is no `config/` directory, no endpoint, no router. The full dependency chain:
 
-- `phoenix_kit` (path: `"../phoenix_kit"`) — provides Module behaviour, Settings, RepoHelper, Dashboard tabs
+- `phoenix_kit` (`~> 1.7`) — provides Module behaviour, Settings, RepoHelper, Dashboard tabs
 - `phoenix_live_view` — web framework (LiveView UI)
 
 ## Local cross-repo development
