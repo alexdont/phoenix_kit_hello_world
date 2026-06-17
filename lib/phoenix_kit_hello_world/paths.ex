@@ -27,4 +27,8 @@ defmodule PhoenixKitHelloWorld.Paths do
   @doc "PhoenixKit core component showcase."
   @spec components() :: String.t()
   def components, do: Routes.path("#{@base}/components")
+
+  @doc "Notification system tour (send / customize / manage)."
+  @spec notifications() :: String.t()
+  def notifications, do: Routes.path("#{@base}/notifications")
 end

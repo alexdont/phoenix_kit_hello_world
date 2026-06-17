@@ -1,3 +1,12 @@
+## 0.1.7 - 2026-06-17
+
+### Added
+- **Notifications example page** (`Web.NotificationsLive`, new "Notifications" admin subtab) — a hands-on tour of the PhoenixKit notification system: send a notification by logging an activity with a `target_uuid`, customize its display via `notification_text`/`notification_icon`/`notification_link` metadata, and read/manage it (unread count, recent list, mark-seen, dismiss) with live PubSub updates. All core calls are guarded with `Code.ensure_loaded?/1`.
+- **`notification_types/0` callback** on `PhoenixKitHelloWorld`, demonstrating how a module declares its notification types so users can mute them in preferences.
+
+### Changed
+- Synced the `version/0` callback with `mix.exs` (was stale at 0.1.5).
+
 ## 0.1.6 - 2026-05-05
 
 ### Changed

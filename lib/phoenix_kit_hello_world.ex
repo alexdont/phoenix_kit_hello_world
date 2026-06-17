@@ -136,7 +136,7 @@ defmodule PhoenixKitHelloWorld do
 
   @impl PhoenixKit.Module
   @doc "Version string. Shown on the admin Modules page."
-  def version, do: "0.1.5"
+  def version, do: "0.1.7"
 
   @impl PhoenixKit.Module
   @doc """
@@ -227,6 +227,17 @@ defmodule PhoenixKitHelloWorld do
         permission: module_key(),
         parent: :admin_hello_world,
         live_view: {PhoenixKitHelloWorld.Web.ComponentsLive, :index}
+      },
+      %Tab{
+        id: :admin_hello_world_notifications,
+        label: "Notifications",
+        icon: "hero-bell-alert",
+        path: "hello-world/notifications",
+        priority: 644,
+        level: :admin,
+        permission: module_key(),
+        parent: :admin_hello_world,
+        live_view: {PhoenixKitHelloWorld.Web.NotificationsLive, :index}
       }
     ]
   end
@@ -234,6 +245,27 @@ defmodule PhoenixKitHelloWorld do
   @impl PhoenixKit.Module
   @doc "OTP apps whose templates Tailwind should scan for CSS classes."
   def css_sources, do: [:phoenix_kit_hello_world]
+
+  @impl PhoenixKit.Module
+  @doc """
+  Notification types this module contributes.
+
+  Each type becomes a per-user toggle in notification preferences. `actions`
+  maps the activity `action` strings this module emits to the type, so a user
+  who mutes "Hello World" stops receiving those notifications. See the
+  Notifications admin page (`Web.NotificationsLive`) for the matching senders.
+  """
+  def notification_types do
+    [
+      %{
+        key: "hello_world",
+        label: "Hello World",
+        description: "Greetings and demos from the Hello World module",
+        actions: ["hello.greeting", "hello.custom"],
+        default: true
+      }
+    ]
+  end
 
   # ===========================================================================
   # Route module (for multi-page modules)
